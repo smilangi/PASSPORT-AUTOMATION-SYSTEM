@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Calculator - Passport Seva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #ffcc00;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            color: #000;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #ff9900;
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #e74c3c;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">Fee Calculator</div>
+
+    <div class="container">
+        <h2>Calculate Passport Application Fee</h2>
+
+        <div class="form-group">
+            <label for="service-type">Type of Service:</label>
+            <select id="service-type" name="service-type">
+                <option value="select">Select</option>
+                <option value="fresh">Fresh Passport</option>
+                <option value="pcc">PCC (Police Clearance Certificate)</option>
+                <option value="background-verification">Background Verification for GEP</option>
+                <option value="reissue">Re-issue of Passport</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fee-amount">Fee Amount (INR):</label>
+            <input type="number" id="fee-amount" placeholder="Enter the fee amount" required>
+        </div>
+
+        <div class="form-group">
+            <button onclick="calculateFee()">Calculate Fee</button>
+        </div>
+
+        <div id="calculated-fee" class="form-group" style="display: none;">
+            <label for="calculated-fee">Calculated Fee (INR):</label>
+            <input type="text" id="calculated-fee-amount" disabled>
+        </div>
+
+        <div class="note">
+            <p><strong>Note:</strong> For Fresh Passport application, a rebate of 10% on the basic Passport fee will be applicable for minor applicants (age <= 8 years) and senior citizens (age > 60 years).</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Passport Automation System | All Rights Reserved</p>
+    </div>
+
+    <script>
+        function calculateFee() {
+            // Get values from the form
+            var serviceType = document.getElementById('service-type').value;
+            var feeAmount = parseFloat(document.getElementById('fee-amount').value);
+
+            // Calculate the fee based on the selected service type
+            var finalFee = feeAmount;
+
+            if (serviceType === "fresh") {
+                var age = prompt("Please enter the applicant's age:");
+                if (age <= 8 || age > 60) {
+                    finalFee = feeAmount * 0.9;  // Apply 10% rebate
+                }
+            }
+
+            // Display the calculated fee
+            document.getElementById('calculated-fee').style.display = 'block';
+            document.getElementById('calculated-fee-amount').value = finalFee.toFixed(2);
+        }
+    </script>
+
+</body>
+
+</html>
